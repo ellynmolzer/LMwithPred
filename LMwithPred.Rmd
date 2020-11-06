@@ -1,0 +1,65 @@
+---
+title: "LMwithPred"
+author: "Ellyn Molzer"
+date: "11/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+require(tigerstats)
+```
+
+We are using a linear model to predict a simulated strength score based on arm strength and or grip strength. 
+
+```{r}
+dataF <- read.csv(file="http://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt",sep="",header=TRUE)  
+```
+
+# model1
+
+Scatterplot SIMS is a function of ARM
+
+```{r}
+plot(SIMS~ARM,data=dataF)
+```
+
+##Now with ggplot - first select the basic data
+
+```{r}
+basicNN <- ggplot(dataF,aes(y=SIMS,x=ARM))
+```
+##Now add in scatterplot
+
+```{r}
+basicNN + geom_point()+ geom_smooth(method=lm)
+```
+
+```{r}
+model.1=lm(SIMS~ARM,data=dataF)
+summary.lm(model.1)
+```
+This is a linear model of SIMS based on a ARM strength. The adjusted R-square is equal to 0.467
+
+# model2
+Scatterplot SIMS is a function of GRIP
+```{r}
+plot(SIMS~GRIP,data=dataF)
+```
+
+##Now with ggplot - first select the basic data
+
+```{r}
+basicNN <- ggplot(dataF,aes(y=SIMS,x=GRIP))
+```
+##Now add in scatterplot
+
+```{r}
+basicNN + geom_point()+ geom_smooth(method=lm)
+```
+
+```{r}
+model.2=lm(SIMS~GRIP,data=dataF)
+summary.lm(model.2)
+```
